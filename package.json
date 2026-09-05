@@ -1,0 +1,12 @@
+{
+  "name": "div-tutor-connect",
+  "version": "1.0.0",
+  "description": "TutorConnect • Production-Grade Full-Stack SaaS Gig Marketplace by Divyansh Mishra",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "test": "cd frontend && npm test"
+  },
+  "author": "Divyansh Mishra"
+}
