@@ -1,7 +1,8 @@
 # TutorConnect 🎓
 ### Production-Grade Full-Stack SaaS Gig Marketplace
 
-[![CI/CD Pipeline](https://github.com/Divyansh-co/TutorConnect/actions/workflows/ci.yml/badge.svg)](https://github.com/Divyansh-co/TutorConnect/actions)
+[![CI/CD Pipeline](https://github.com/Divyansh-co/DIV-TUTOR-CONNECT/actions/workflows/ci.yml/badge.svg)](https://github.com/Divyansh-co/DIV-TUTOR-CONNECT/actions)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black.svg?logo=vercel)](https://github.com/Divyansh-co/DIV-TUTOR-CONNECT)
 [![Django](https://img.shields.io/badge/Backend-Django%205.0%20%2B%20DRF-092e20.svg?logo=django)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20TypeScript%20%2B%20Vite-61dafb.svg?logo=react)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-38bdf8.svg?logo=tailwindcss)](https://tailwindcss.com/)
