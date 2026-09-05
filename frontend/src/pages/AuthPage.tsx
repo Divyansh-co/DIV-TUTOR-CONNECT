@@ -248,19 +248,19 @@ export const AuthPage: React.FC = () => {
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => handleDemoFill('client@tutorconnect.com')}
-                className="text-xs"
+                onClick={() => handleDemoFill('div-student@tutorconnect.com')}
+                className="text-xs font-semibold"
               >
-                Demo Student
+                🎒 div-student
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => handleDemoFill('tutor@tutorconnect.com', true)}
-                className="text-xs"
+                onClick={() => handleDemoFill('div-tutor@tutorconnect.com', true)}
+                className="text-xs font-semibold"
               >
-                Demo Tutor
+                🎓 div-tutor
               </Button>
             </div>
           </div>

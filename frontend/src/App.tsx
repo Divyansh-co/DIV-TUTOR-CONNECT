@@ -37,6 +37,14 @@ export const App: React.FC = () => {
               </Routes>
             </main>
             <Footer />
+
+            {/* Anti-Copy Author Floating Badge */}
+            <div className="fixed bottom-3 right-3 z-50 pointer-events-none select-none">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-950/90 text-white shadow-xl backdrop-blur-md text-[10px] font-semibold border border-zinc-800">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Protected Portfolio • Built by Divyansh Mishra</span>
+              </div>
+            </div>
           </div>
           <Toaster richColors position="top-right" />
         </Router>

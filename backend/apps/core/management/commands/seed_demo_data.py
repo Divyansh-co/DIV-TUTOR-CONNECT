@@ -35,10 +35,10 @@ TUTORS_DATA = [
         ]
     },
     {
-        "first_name": "Marcus",
-        "last_name": "Vance",
-        "email": "tutor@tutorconnect.com",  # Primary demo tutor account
-        "headline": "Senior Staff SWE at FAANG | Full-Stack React, Python & Algorithms",
+        "first_name": "div",
+        "last_name": "tutor",
+        "email": "div-tutor@tutorconnect.com",  # Primary demo tutor account (div-tutor)
+        "headline": "FAANG Senior Staff SWE & Mentor | Full-Stack React, Python & System Design",
         "bio": "Over 9 years in industry building scalable cloud distributed systems. I mentor aspiring software engineers and university CS students through Data Structures, LeetCode algorithms, Python, and React architecture.",
         "hourly_rate": 80.00,
         "city": "Seattle",
@@ -182,23 +182,36 @@ class Command(BaseCommand):
             admin.save()
             self.stdout.write(self.style.SUCCESS("Created admin: admin@tutorconnect.com (Password123!)"))
 
-        # 2. Create Demo Client
+        # 2. Create Demo Client (div-student)
         demo_client, created = User.objects.get_or_create(
-            email="client@tutorconnect.com",
+            email="div-student@tutorconnect.com",
             defaults={
-                "first_name": "Alex",
-                "last_name": "Johnson",
+                "first_name": "div",
+                "last_name": "student",
                 "is_client": True,
                 "is_provider": False,
                 "email_verified": True,
                 "avatar_url": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=400",
-                "bio": "University student preparing for tech interviews and advanced coursework."
+                "bio": "div-student preparing for tech interviews, algorithms, and university coursework."
             }
         )
-        if created:
-            demo_client.set_password("Password123!")
-            demo_client.save()
-            self.stdout.write(self.style.SUCCESS("Created demo client: client@tutorconnect.com (Password123!)"))
+        demo_client.set_password("Password123!")
+        demo_client.save()
+        self.stdout.write(self.style.SUCCESS("Created demo client: div-student (div-student@tutorconnect.com / Password123!)"))
+
+        # Also support client@tutorconnect.com alias
+        old_client, _ = User.objects.get_or_create(
+            email="client@tutorconnect.com",
+            defaults={
+                "first_name": "div",
+                "last_name": "student",
+                "is_client": True,
+                "is_provider": False,
+                "email_verified": True,
+            }
+        )
+        old_client.set_password("Password123!")
+        old_client.save()
 
         # 3. Create Additional Clients for social proof
         other_clients = []
@@ -241,7 +254,7 @@ class Command(BaseCommand):
                     "bio": data["bio"],
                 }
             )
-            if created or data["email"] == "tutor@tutorconnect.com":
+            if created or data["email"] in ["tutor@tutorconnect.com", "div-tutor@tutorconnect.com"]:
                 u.set_password("Password123!")
                 u.save()
 
@@ -409,6 +422,6 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("TutorConnect demo data seeded successfully!"))
         self.stdout.write(self.style.SUCCESS("Demo accounts ready:"))
-        self.stdout.write(" - Client:   client@tutorconnect.com  / Password123!")
-        self.stdout.write(" - Provider: tutor@tutorconnect.com   / Password123!")
-        self.stdout.write(" - Admin:    admin@tutorconnect.com   / Password123!")
+        self.stdout.write(" - Student:  div-student@tutorconnect.com (div-student) / Password123!")
+        self.stdout.write(" - Tutor:    div-tutor@tutorconnect.com (div-tutor)     / Password123!")
+        self.stdout.write(" - Admin:    admin@tutorconnect.com                     / Password123!")

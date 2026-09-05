@@ -46,16 +46,16 @@ export const HomePage: React.FC = () => {
     setDemoLoading(role);
     try {
       if (role === 'client') {
-        await login({ email: 'client@tutorconnect.com', password: 'Password123!' });
+        await login({ email: 'div-student@tutorconnect.com', password: 'Password123!' });
         navigate('/dashboard/client');
       } else {
-        await login({ email: 'tutor@tutorconnect.com', password: 'Password123!' });
+        await login({ email: 'div-tutor@tutorconnect.com', password: 'Password123!' });
         navigate('/dashboard/provider');
       }
     } catch (err) {
       navigate('/auth');
     } finally {
-      setDemoLoading(null);
+      setDemoLoading(false as any);
     }
   };
 
@@ -103,7 +103,7 @@ export const HomePage: React.FC = () => {
                 onClick={() => handleQuickLogin('client')}
                 className="px-2.5 py-0.5 rounded-full bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 hover:text-brand-600 dark:hover:text-brand-400 font-semibold shadow-xs text-[11px] transition-colors"
               >
-                {demoLoading === 'client' ? 'Entering...' : 'Demo as Student'}
+                {demoLoading === 'client' ? 'Entering...' : 'div-student'}
               </button>
               <button
                 type="button"
@@ -111,7 +111,7 @@ export const HomePage: React.FC = () => {
                 onClick={() => handleQuickLogin('provider')}
                 className="px-2.5 py-0.5 rounded-full bg-brand-600 text-white hover:bg-brand-700 font-semibold shadow-xs text-[11px] transition-colors"
               >
-                {demoLoading === 'provider' ? 'Entering...' : 'Demo as Tutor'}
+                {demoLoading === 'provider' ? 'Entering...' : 'div-tutor'}
               </button>
             </div>
           </div>

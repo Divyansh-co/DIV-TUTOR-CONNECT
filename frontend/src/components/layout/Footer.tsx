@@ -72,17 +72,19 @@ export const Footer: React.FC = () => {
         <div className="mt-12 pt-6 border-t border-zinc-100 dark:border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400 dark:text-zinc-600">
           <p>© {new Date().getFullYear()} TutorConnect Marketplace Inc. All rights reserved.</p>
 
-          {/* Required Watermark Credit */}
-          <div className="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
-            <span>Built with precision by</span>
+          {/* Required Anti-Copy Watermark Credit */}
+          <div className="flex flex-wrap items-center gap-2 p-2 px-3 rounded-xl bg-zinc-100/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 text-xs select-none">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-zinc-600 dark:text-zinc-400">Designed & Engineered by</span>
             <a
               href="https://github.com/Divyansh-co"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-zinc-700 dark:text-zinc-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+              className="font-bold text-zinc-950 dark:text-white hover:text-brand-600 dark:hover:text-brand-400 transition-colors underline decoration-brand-500 underline-offset-4"
             >
-              Divyansh Mishra
+              Divyansh Mishra (@divyanshmishra)
             </a>
+            <span className="text-zinc-400 font-mono text-[11px]">• Proprietary Showcase</span>
           </div>
         </div>
       </div>

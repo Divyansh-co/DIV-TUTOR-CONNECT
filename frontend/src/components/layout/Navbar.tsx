@@ -46,6 +46,14 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
+      {/* Anti-Copy Author Protected Header Watermark */}
+      <div className="w-full bg-zinc-950 text-zinc-300 py-1.5 px-4 text-center text-[11px] font-medium border-b border-zinc-850 flex items-center justify-center gap-2 select-none tracking-wide">
+        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+        <span className="truncate">
+          🛡️ Protected Portfolio Project • Designed & Engineered by <strong className="text-white font-bold">Divyansh Mishra</strong> (<span className="text-brand-400 font-mono">@divyanshmishra</span>) • All Rights Reserved
+        </span>
+      </div>
+
       <header className="sticky top-0 z-40 w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80 transition-colors">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Brand Logo */}
