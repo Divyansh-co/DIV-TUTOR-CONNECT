@@ -1,64 +1,116 @@
-# TutorConnect
+# 🎓 TutorConnect
+**Enterprise Full-Stack Marketplace & Academic Scheduling Platform**  
+*Engineered by Divyansh Mishra • All Rights Reserved*
 
-A full-stack gig marketplace app that connects tutors with students — built to actually feel like a production SaaS product instead of another CRUD tutorial project.
+---
 
-Built by Divyansh Mishra.
+## 🌟 Executive Overview
+**TutorConnect** is a production-grade academic gig marketplace connecting students with expert tutors. Built to solve real-world marketplace engineering challenges, the platform features collision-free availability scheduling with PostgreSQL row-level pessimistic locking, asynchronous task processing via Celery and Redis, dual-role JWT access control, and simulated Stripe test-mode checkout and digital invoicing.
 
-## Overview
+---
 
-TutorConnect lets tutors list their availability and students book sessions with them, with real scheduling logic behind it (not just a static calendar). Both sides get their own dashboard/role in the app. I wanted to go past "just build a form and save it to a DB" and actually deal with things like conflicting time slots, background jobs, caching, and payments — even if the payments part is running in Stripe's test mode for now.
+## 🏛️ System Architecture
 
-## Tech stack
+```mermaid
+flowchart TB
+    subgraph Client["Frontend Client (React 18 + TypeScript + Vite)"]
+        UI["Tailwind Modern UI (Light / Dark)"]
+        AuthContext["Dual-Role JWT Auth Context"]
+        Calendar["Interactive Availability Grid"]
+        CheckoutModal["Stripe Test Checkout & Invoicing"]
+        ReviewSystem["5-Star Rating & Verified Badges"]
+    end
 
-**Backend**
-- Django 5.0 + Django REST Framework
-- PostgreSQL 16
-- Redis 7 — used both as a cache layer and as the Celery broker
-- Celery for async/background jobs (things like sending notifications, processing payouts, etc. don't block the request)
+    subgraph API["Backend API Gateway (Django 5.0 + DRF @ Port 8000)"]
+        Router["REST URL Routers"]
+        Permissions["Role Gates: IsClient vs. IsProvider"]
+        LockingEngine["Pessimistic Slot Locking (select_for_update)"]
+        WebhookHandler["Stripe HMAC Webhook Listener"]
+    end
 
-**Frontend**
-- React 18 + TypeScript, built with Vite
-- Tailwind CSS for styling
+    subgraph Persistence["Storage & Cache Infrastructure"]
+        DB[(PostgreSQL 16: Relational Models & ACID Transactions)]
+        RedisCache[(Redis 7 Cache: Query Caching & Rate Limiting)]
+    end
 
-**Payments**
-- Stripe, running in test mode — simulates the checkout + payout flow for tutors without touching real money
+    subgraph AsyncWorker["Background Worker Pipeline (Celery 5.3+)"]
+        Broker[(Redis 7: Celery Message Broker)]
+        Worker["Celery Asynchronous Workers"]
+        EmailTask["Email & In-App Notification Dispatcher"]
+        PayoutTask["Tutor Payout & Rating Recalculator"]
+    end
 
-**Infra**
-- Dockerized with Docker Compose so the whole thing (API, DB, Redis, worker) spins up together
-- Deployed on Vercel
-- CI/CD pipeline set up so pushes get tested/built automatically
+    Client --> Router
+    Router --> Permissions
+    Permissions --> LockingEngine
+    LockingEngine --> DB
+    Router --> RedisCache
+    WebhookHandler --> DB
+    Router --> Broker
+    Broker --> Worker
+    Worker --> EmailTask
+    Worker --> PayoutTask
+```
 
-## Key features
+For complete technical specifications, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
-- Dual-role accounts — tutor and student have different dashboards/permissions
-- Real-time-ish availability scheduling with collision-free slot calculation (so you can't double-book a tutor)
-- Async background workflows via Celery instead of blocking the main request cycle
-- Multi-level Redis caching + basic rate limiting on the API
-- Stripe test-mode checkout with simulated payouts to tutors
+---
 
-## Running it locally
+## 🚀 Core Features
 
+- **Dual-Role IAM (Student & Tutor)**: Single unified User model with custom role-scoped permissions, automated JWT token rotation, and private dashboard guards.
+- **Collision-Free Scheduling Engine**: Real-time slot reservation using PostgreSQL `transaction.atomic()` and `select_for_update()` row-level locking to mathematically eliminate double-booking race conditions.
+- **Asynchronous Task Queue (Celery + Redis)**: Offloads email notifications, dispute alerts, and review aggregations from the HTTP request-response cycle.
+- **Stripe Payments (Test Mode)**: Hosted Checkout session simulation, digital receipt generation, and HMAC-SHA256 webhook verification.
+- **Verified Credential & Review System**: Post-save signal recalculating tutor ratings, review counts, and verified tutor status badges.
+- **Docker Compose Multi-Container Orchestration**: 5-tier setup spinning up Postgres 16, Redis 7, Django, Celery Worker, and Vite frontend.
+
+---
+
+## 💻 Running Locally
+
+### Option A: One-Command Docker Setup
 ```bash
 git clone https://github.com/Divyansh-co/DIV-TUTOR-CONNECT.git
 cd DIV-TUTOR-CONNECT
 docker-compose up --build
 ```
 
-You'll need a `.env` file for both the backend and frontend with your DB credentials, Redis URL, and Stripe test keys — check `.env.example` for what's needed.
+### Option B: Manual Setup
+#### 1. Backend Setup
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver 8000
+```
 
-Backend runs the Django/DRF API, frontend is served separately via Vite's dev server during development.
+#### 2. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Dashboard: `http://localhost:5173` • API Docs: `http://localhost:8000/api/v1/`
 
-## Why I built this
+---
 
-Wanted a project that goes deep on backend architecture (queues, caching, race conditions on bookings) instead of just being another portfolio to-do app. This is also the project I use to show how I think about system design when I talk about it in interviews/portfolio reviews.
+## 📚 Engineering Documentation Suite
 
-## Known limitations / things I'd still improve
+- 📋 [Product Requirements Document (PRD.md)](PRD.md)
+- 🏛️ [System Architecture & Data Contracts (ARCHITECTURE.md)](ARCHITECTURE.md)
+- 🎨 [Design System & UI Tokens (DESIGN.md)](DESIGN.md)
+- 📖 [AI & Engineering Rulebook (RULES.md)](RULES.md)
+- 🗺️ [Phased Roadmap & Tasks (TASKS.md)](TASKS.md)
+- 📝 [Architecture Decision Records (DECISIONS.md)](DECISIONS.md)
+- 🧠 [Project Memory & State (MEMORY.md)](MEMORY.md)
+- 🧪 [Exhaustive QA Test Plan (TEST_PLAN.md)](TEST_PLAN.md)
+- 🛡️ [Security Policy & Threat Model (SECURITY.md)](SECURITY.md)
 
-- Stripe is test-mode only, no real payouts wired up
-- Notification system could use more polish (email/SMS hooks aren't fully fleshed out)
-- Admin-side tooling for disputes/refunds is minimal right now
-- Test coverage on the scheduling logic could be higher given how central it is
+---
 
-## Contributing
-
-This started as a solo portfolio/learning project, so it's not really set up for outside contributions right now, but feel free to open an issue if you spot a bug or have feedback.
+## 🛡️ License & Authorship
+**TutorConnect** is designed and engineered by **Divyansh Mishra**.  
+All rights reserved. Proprietary software.
